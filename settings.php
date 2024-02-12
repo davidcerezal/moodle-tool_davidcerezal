@@ -1,5 +1,5 @@
 <?php
-// This file is part of the tool_datewatch plugin for Moodle - http://moodle.org/
+// This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -15,13 +15,21 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * tool_davidcerezal
+ * Links and settings
+ *
+ * This file contains links and settings used by tool_davidcerezal
  *
  * @package    tool_davidcerezal
- * @copyright  2016 Marina Glancy
+ * @copyright  2014 onwards Ankit Agarwal <ankit.agrr@gmail.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+defined('MOODLE_INTERNAL') || die;
 
-$string['pluginname'] = 'David Cerezal Demo';
-$string['pagemaintitle'] = 'Main title';
-$string['helloworld'] = 'Hello world {$a}';
+// Manage rules page.
+$temp = new admin_externalpage(
+    'tooldavidcerezal',
+    get_string('pluginname', 'tool_davidcerezal'),
+    "{$CFG->wwwroot}/admin/tool/davidcerezal/index.php",
+    'moodle/site:config'
+);
+
