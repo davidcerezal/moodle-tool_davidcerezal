@@ -15,17 +15,22 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @package   tool_davicerezal
+ * Links and settings
+ *
+ * This file contains links and settings used by tool_davidcerezal
+ *
+ * @package    tool_davidcerezal
  * @copyright 2024, David Cerezal <david.cerezal@moodle.com>
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+require_once(__DIR__ . '/../../../config.php');
+require_once($CFG->libdir.'/adminlib.php');
 
-defined('MOODLE_INTERNAL') || die();
+require_login();
+require_sesskey();
+require_capability('moodle/site:config', context_system::instance());
 
-$plugin->component = 'tool_davidcerezal';
-$plugin->release   = '4.2.3';
-$plugin->version   = 2024021300;
-$plugin->requires  = 2020061500.00;
-$plugin->maturity  = MATURITY_ALPHA;
-$plugin->supported = [39, 403];
-
+if ($deleteid = optional_param('delete', null, PARAM_INT)) {
+    $DB->delete_records('tool_davidcerezal', ['id' => $deleteid]);
+    redirect(new moodle_url('/admin/tool/davidcerezal/index.php', ['courseid' => $courseid]));
+}

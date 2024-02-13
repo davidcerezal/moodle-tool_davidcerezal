@@ -1,5 +1,5 @@
 <?php
-// This file is part of the tool_datewatch plugin for Moodle - http://moodle.org/
+// This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -15,13 +15,19 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * tool_davidcerezal
- *
- * @package    tool_davidcerezal
- * @copyright  2016 Marina Glancy
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package   tool_davicerezal
+ * @copyright 2024, David Cerezal <david.cerezal@moodle.com>
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 $string['pluginname'] = 'David Cerezal Demo';
 $string['pagemaintitle'] = 'Main title';
 $string['helloworld'] = 'Hello world {$a}';
+$string['courseid'] = 'courseid of numb';
+$string['name'] = 'Name';
+$string['completed'] = 'Completed';
+$string['priority'] = 'Priority';
+$string['timecreated'] = 'Time Created';
+$string['timemodified'] = 'Time Modified';
+$string['editentry'] = 'Editar mensaje Modified';
+$string['delete'] = 'Edit entry {$a}';

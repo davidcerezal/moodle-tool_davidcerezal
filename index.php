@@ -20,9 +20,10 @@
  * This file contains links and settings used by tool_davidcerezal
  *
  * @package    tool_davidcerezal
- * @copyright  2014 onwards Ankit Agarwal <ankit.agrr@gmail.com>
+ * @copyright  2024, David Cerezal <david.cerezal@moodle.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+
 require_once(__DIR__ . '/../../../config.php');
 require_once($CFG->libdir.'/adminlib.php');
 
@@ -32,7 +33,7 @@ require_capability('moodle/site:config', context_system::instance());
 
 global $DB;
 
-$course_id = required_param('course_id', PARAM_INT);
+$courseid = required_param('course_id', PARAM_INT);
 
 // Define the page layout
 $PAGE->set_context(context_system::instance());
@@ -41,28 +42,50 @@ $PAGE->set_title(get_string('pluginname', 'tool_davidcerezal'));
 $PAGE->set_heading(get_string('pluginname', 'tool_davidcerezal'));
 echo $OUTPUT->header();
 
-// Your page content goes here
-//$output = $PAGE->get_renderer('tool_demo');
-$userinput = get_string('helloworld', 'tool_davidcerezal', $course_id);
-$course = $DB->get_record('course', ['id' => $course_id]);
+//Print row tables
+print_database_table('tool_davidcerezal');
 
-if ($course) {
-    $course_fullname = $course->fullname;
-} else {
-    $course_fullname = "course not found"; 
-}    
-
-$sql = "
-    SELECT COUNT(DISTINCT ue.userid) AS enrolled_users_count
-    FROM {user_enrolments} ue
-    JOIN {enrol} e ON ue.enrolid = e.id
-    WHERE e.courseid = :courseid
-";
-
-$enrolled_users_count = $DB->count_records_sql($sql, ['courseid' => $course_id]);
-
-echo html_writer::div($userinput);
-echo html_writer::div(s($userinput)); // Used when you want to escape the value.
-echo html_writer::div($course_fullname); 
-echo html_writer::div($enrolled_users_count); 
+$course_context = context_course::instance($courseid);
+if (has_capability('tool/davidcerezal:edit', $course_context)) {
+    $edit_link = new moodle_url('/admin/tool/davidcerezal/edit.php', ['course_id' => $course_id]);
+    echo html_writer::link($edit_link, get_string('editentry', 'tool_davidcerezal'));
+}
 echo $OUTPUT->footer();
+
+
+/**
+ * Print a table with all data and headers from a database table.
+ *
+ * @param string $table_name The name of the database table.
+ */
+function print_database_table($table_name) {
+    global $DB;
+
+    // Get all data from the database table
+    $data = $DB->get_records($table_name);
+
+    // Get column names (headers) of the database table
+    $columns = $DB->get_columns($table_name);
+
+    // Create an instance of the html_table class
+    $table = new html_table();
+    $table->attributes['class'] = 'generaltable'; // Add CSS class for styling (optional)
+
+    // Add table headers
+    $table->head = array_keys($columns);
+    $table->head[] = 'actions';
+
+    // Add table rows
+    foreach ($data as $row) {
+        $table_row = array();
+        foreach ($row as $key => $value) {
+            $table_row[] = format_string($value);
+        }
+        $action = new moodle_url('/admin/tool/davidcerezal/edit.php', ['course_id' => $row->courseid, 'row_id' => $row->id]);
+        $table_row[] = html_writer::link($action, get_string('edit', 'tool_davidcerezal', $row->name));
+        $table->data[] = $table_row;
+    }
+
+    // Print the table
+    echo html_writer::table($table);
+}
