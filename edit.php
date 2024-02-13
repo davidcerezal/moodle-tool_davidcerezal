@@ -20,7 +20,6 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-
 // Include Moodle configuration and necessary libraries
 require_once(__DIR__ . '/../../../config.php');
 require_once($CFG->libdir.'/adminlib.php');
@@ -35,7 +34,7 @@ global $DB;
 // Retrieve parameters
 $courseid = required_param('course_id', PARAM_INT);
 $rowid = optional_param('row_id', null, PARAM_INT);
-$context = context_system::instance();
+$context = context_course::instance($courseid);
 
 // Fetch data for editing if row ID is provided
 if ($rowid) {
@@ -47,21 +46,23 @@ $actionurl = new moodle_url('/admin/tool/davidcerezal/edit.php', ['course_id' =>
 $form = new \tool_davidcerezal\form\simpledavidcerezal_form($actionurl, [1, $context]);
 
 // Initialize form data
-$data = ['courseid' => $courseid, 'rowid' => $rowid];
+$data = (object)['courseid' => $courseid, 'rowid' => $rowid];
 
 // Populate form data if row ID is provided
 if ($rowid && $recordrow) {
-    $data['name'] = $recordrow->name;
-    $data['completed'] = $recordrow->completed;
+    $data->name = $recordrow->name;
+    $data->completed = $recordrow->completed;
+    $data->description = $recordrow->description;
 }
 // Call file_prepare_standard_editor() before setting the data to the form
 if ($rowid && $recordrow) {
-    file_prepare_standard_editor($recordrow, 'description', [
+    $data = file_prepare_standard_editor($data, 'description', [
         'trusttext' => true,
         'subdirs' => true,
         'maxfiles' => 1,
         'context' => $context,
-        ], $context, 'tool_davidcerezal', 'description_editor', $rowid);
+        'noclean' => true,
+        ], $context, 'tool_davidcerezal', 'description', $rowid);
 }
 
 // Set form data
@@ -88,7 +89,7 @@ if ($data = $form->get_data()) {
             'subdirs' => true,
             'maxfiles' => 1,
             'context' => $context,
-        ], $context, 'tool_davidcerezal', 'description_editor', $rowid);
+        ], $context, 'tool_davidcerezal', 'description', $rowid);
 
         // Update the existing record
         $record->id = $rowid;

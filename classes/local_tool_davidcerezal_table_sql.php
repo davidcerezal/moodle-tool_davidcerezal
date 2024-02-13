@@ -32,7 +32,7 @@ require_once($CFG->libdir . '/tablelib.php');
 
 use table_sql;
 
-/** 
+/**
  * Table class for the davidcerezal table.
  */
 class local_tool_davidcerezal_table_sql extends table_sql {
@@ -60,7 +60,6 @@ class local_tool_davidcerezal_table_sql extends table_sql {
 
     /**
      * Formats the columns.
-     * 
      * @param mixed $value the value to format
      * @return string the formatted value
      */
@@ -70,7 +69,6 @@ class local_tool_davidcerezal_table_sql extends table_sql {
 
     /**
      * Formats the columns.
-     * 
      * @param mixed $value the value to format
      * @return string the formatted value
      */
@@ -80,7 +78,6 @@ class local_tool_davidcerezal_table_sql extends table_sql {
 
     /**
      * Formats the columns.
-     * 
      * @param mixed $value the value to format
      * @return string the formatted value
      */
@@ -90,7 +87,6 @@ class local_tool_davidcerezal_table_sql extends table_sql {
 
     /**
      * Formats the columns.
-     * 
      * @param mixed $value the value to format
      * @return string the formatted value
      */

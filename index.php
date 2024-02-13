@@ -34,6 +34,7 @@ require_capability('moodle/site:config', context_system::instance());
 global $DB;
 
 $courseid = required_param('course_id', PARAM_INT);
+$coursecontext = context_course::instance($courseid);
 
 // Define the page layout
 $PAGE->set_context(context_system::instance());
@@ -43,9 +44,8 @@ $PAGE->set_heading(get_string('pluginname', 'tool_davidcerezal'));
 echo $OUTPUT->header();
 
 // Print row tables
-print_database_table('tool_davidcerezal');
+print_database_table('tool_davidcerezal', $coursecontext);
 
-$coursecontext = context_course::instance($courseid);
 if (has_capability('tool/davidcerezal:edit', $coursecontext)) {
     $editlink = new moodle_url('/admin/tool/davidcerezal/edit.php', ['course_id' => $courseid]);
     echo html_writer::link($editlink, get_string('editentry', 'tool_davidcerezal'));
@@ -57,8 +57,9 @@ echo $OUTPUT->footer();
  * Print a table with all data and headers from a database table.
  *
  * @param string $tablename The name of the database table.
+ * @param context $coursecontext The context of the course.
  */
-function print_database_table($tablename) {
+function print_database_table($tablename, $coursecontext) {
     global $DB;
 
     // Get all data from the database table
@@ -79,7 +80,13 @@ function print_database_table($tablename) {
     foreach ($data as $row) {
         $tablerow = array();
         foreach ($row as $key => $value) {
-            $tablerow[] = format_string($value);
+            if ($key == 'description') {
+                $valueformatted = file_rewrite_pluginfile_urls($value, 'pluginfile.php',
+                $coursecontext->id, 'tool_davidcerezal', 'description', $row->id);
+                $tablerow[] = format_text($valueformatted, FORMAT_HTML, ['noclean' => true]);
+            } else {
+                $tablerow[] = format_string($value);
+            }
         }
         $action = new moodle_url('/admin/tool/davidcerezal/edit.php', ['course_id' => $row->courseid, 'row_id' => $row->id]);
         $tablerow[] = html_writer::link($action, get_string('edit', 'tool_davidcerezal', $row->name));

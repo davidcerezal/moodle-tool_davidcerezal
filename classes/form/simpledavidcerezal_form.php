@@ -73,18 +73,17 @@ class simpledavidcerezal_form extends moodleform {
         // Validate 'name' field.
         if (empty($data['name'])) {
             $errors['name'] = get_string('error_name_required', 'tool_davidcerezal');
-        } elseif (strlen($data['name']) > 255) {
+        } else if (strlen($data['name']) > 255) {
             $errors['name'] = get_string('error_name_length', 'tool_davidcerezal');
         } else {
             // Check if the name is already in use.
             $existingrecord = $DB->get_record('tool_davidcerezal', ['name' => $data['name'], 'courseid' => (int)$data['courseid']]);
-            if ($existingrecord && $existingrecord->id !== $data['rowid']){
+            if ($existingrecord && $existingrecord->id !== $data['rowid']) {
                 $errors['name'] = get_string('error_name_unique', 'tool_davidcerezal');
             }
         }
 
         return $errors;
     }
-
- 
 }
+

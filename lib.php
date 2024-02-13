@@ -40,3 +40,32 @@ function tool_davidcerezal_extend_navigation_course($navigation, $course, $conte
         'tool_davidcerezal',
         new pix_icon('icon', '', 'tool_davidcerezal'));
 }
+
+/**
+ * Callback function to serve plugin files.
+ * Check appropriate access and permissions before serving a file.
+ * @param stdClass $course
+ * @param stdClass $cm
+ * @param context $context
+ * @param string $filearea
+ * @param array $args
+ * @param bool $forcedownload
+ * @param array $options
+ * @throws moodle_exception
+ */
+function tool_davidcerezal_pluginfile($course, $cm, $context, $filearea, $args, $forcedownload, array $options=array()) {
+    global $CFG, $DB;
+
+    // Security checks
+    require_course_login($course, true, $cm);
+
+    $fs = get_file_storage();
+    $file = $fs->get_file($context->id, 'tool_davidcerezal', $filearea, $args[0], '/', $args[1]);
+    if (!$file) {
+        send_file_not_found();
+    }
+
+    // Serve the file
+    send_stored_file($file, null, 0, $forcedownload, $options);
+}
+
