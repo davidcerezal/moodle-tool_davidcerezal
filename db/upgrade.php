@@ -29,7 +29,6 @@ function xmldb_tool_davidcerezal_upgrade($oldversion) {
     global $DB, $CFG;
     $dbman = $DB->get_manager();
 
-
     if ($oldversion < 2024021200) {
 
         // Define field id to be added to tool_davidcerezal.
@@ -62,7 +61,7 @@ function xmldb_tool_davidcerezal_upgrade($oldversion) {
         $fields[] = new xmldb_field('description', XMLDB_TYPE_TEXT, null, null, null, null, null, 'timemodified');
         $fields[] = new xmldb_field('descriptionformat', XMLDB_TYPE_INTEGER, '10', null, null, null, null, 'description');
 
-        foreach($fields as $field) {
+        foreach ($fields as $field) {
             // Conditionally launch add field description.
             if (!$dbman->field_exists($table, $field)) {
                 $dbman->add_field($table, $field);

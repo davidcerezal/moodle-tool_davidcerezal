@@ -37,7 +37,6 @@ function tool_davidcerezal_extend_navigation_course($navigation, $course, $conte
         new moodle_url('/admin/tool/davidcerezal/index.php', ['course_id' => $course->id]),
         navigation_node::TYPE_SETTING,
         get_string('pluginname', 'tool_davidcerezal'),
-        'tool_davidcerezal', 
+        'tool_davidcerezal',
         new pix_icon('icon', '', 'tool_davidcerezal'));
-    
 }

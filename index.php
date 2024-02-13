@@ -42,13 +42,13 @@ $PAGE->set_title(get_string('pluginname', 'tool_davidcerezal'));
 $PAGE->set_heading(get_string('pluginname', 'tool_davidcerezal'));
 echo $OUTPUT->header();
 
-//Print row tables
+// Print row tables
 print_database_table('tool_davidcerezal');
 
-$course_context = context_course::instance($courseid);
-if (has_capability('tool/davidcerezal:edit', $course_context)) {
-    $edit_link = new moodle_url('/admin/tool/davidcerezal/edit.php', ['course_id' => $course_id]);
-    echo html_writer::link($edit_link, get_string('editentry', 'tool_davidcerezal'));
+$coursecontext = context_course::instance($courseid);
+if (has_capability('tool/davidcerezal:edit', $coursecontext)) {
+    $editlink = new moodle_url('/admin/tool/davidcerezal/edit.php', ['course_id' => $courseid]);
+    echo html_writer::link($editlink, get_string('editentry', 'tool_davidcerezal'));
 }
 echo $OUTPUT->footer();
 
@@ -56,16 +56,16 @@ echo $OUTPUT->footer();
 /**
  * Print a table with all data and headers from a database table.
  *
- * @param string $table_name The name of the database table.
+ * @param string $tablename The name of the database table.
  */
-function print_database_table($table_name) {
+function print_database_table($tablename) {
     global $DB;
 
     // Get all data from the database table
-    $data = $DB->get_records($table_name);
+    $data = $DB->get_records($tablename);
 
     // Get column names (headers) of the database table
-    $columns = $DB->get_columns($table_name);
+    $columns = $DB->get_columns($tablename);
 
     // Create an instance of the html_table class
     $table = new html_table();
@@ -77,13 +77,13 @@ function print_database_table($table_name) {
 
     // Add table rows
     foreach ($data as $row) {
-        $table_row = array();
+        $tablerow = array();
         foreach ($row as $key => $value) {
-            $table_row[] = format_string($value);
+            $tablerow[] = format_string($value);
         }
         $action = new moodle_url('/admin/tool/davidcerezal/edit.php', ['course_id' => $row->courseid, 'row_id' => $row->id]);
-        $table_row[] = html_writer::link($action, get_string('edit', 'tool_davidcerezal', $row->name));
-        $table->data[] = $table_row;
+        $tablerow[] = html_writer::link($action, get_string('edit', 'tool_davidcerezal', $row->name));
+        $table->data[] = $tablerow;
     }
 
     // Print the table

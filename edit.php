@@ -60,7 +60,7 @@ if ($rowid && $recordrow) {
         'trusttext' => true,
         'subdirs' => true,
         'maxfiles' => 1,
-        'context' => $context
+        'context' => $context,
         ], $context, 'tool_davidcerezal', 'description_editor', $rowid);
 }
 
@@ -87,7 +87,7 @@ if ($data = $form->get_data()) {
             'trusttext' => true,
             'subdirs' => true,
             'maxfiles' => 1,
-            'context' => $context
+            'context' => $context,
         ], $context, 'tool_davidcerezal', 'description_editor', $rowid);
 
         // Update the existing record
@@ -95,7 +95,7 @@ if ($data = $form->get_data()) {
         $record->description = $data->description;
         $record->descriptionformat = $data->descriptionformat;
         $DB->update_record('tool_davidcerezal', $record);
-    } 
+    }
 
     // Redirect after successful operation
     redirect(new moodle_url('/admin/tool/davidcerezal/index.php', ['course_id' => $courseid]));

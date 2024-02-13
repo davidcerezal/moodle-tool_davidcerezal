@@ -27,7 +27,7 @@ use moodleform;
 use stdClass;
 require_once($CFG->libdir.'/formslib.php');
 
-/* 
+/*
  * This class defines the form for adding a new record to the tool_davidcerezal table
  */
 class simpledavidcerezal_form extends moodleform {
@@ -45,7 +45,7 @@ class simpledavidcerezal_form extends moodleform {
             'maxfiles' => $maxfiles,
             'context' => $context,
         ];
-        
+
         $mform = $this->_form;
         $mform->addElement('text', 'name', get_string('entryname', 'tool_davidcerezal'));
         $mform->addElement('checkbox', 'completed', get_string('completed', 'tool_davidcerezal'));
@@ -55,30 +55,30 @@ class simpledavidcerezal_form extends moodleform {
         $this->add_action_buttons();
     }
 
-      /**
-       * This function validates the form data and cheks that the name is unique
-       * @param array $data  the data from the form
-       * @param array $files the files from the form
-       */
-    function validation($data, $files) {
+    /**
+     * This function validates the form data and cheks that the name is unique
+     * @param array $data  the data from the form
+     * @param array $files the files from the form
+     */
+    public function validation($data, $files) {
         global $DB;
         $errors = [];
 
-        $exists_and_is_numeric = !empty($data['courseid']) && !is_numeric($data['courseid']);
-        // Validate 'courseid' field
-        if (empty($data['courseid']) || $exists_and_is_numeric) {
+        $existsandisnumeric = !empty($data['courseid']) && !is_numeric($data['courseid']);
+        // Validate 'courseid' field.
+        if (empty($data['courseid']) || $existsandisnumeric) {
             $errors['courseid'] = get_string('error_courseid_invalid', 'tool_davidcerezal');
         }
 
-        // Validate 'name' field
+        // Validate 'name' field.
         if (empty($data['name'])) {
             $errors['name'] = get_string('error_name_required', 'tool_davidcerezal');
         } elseif (strlen($data['name']) > 255) {
             $errors['name'] = get_string('error_name_length', 'tool_davidcerezal');
         } else {
-            // Check if the name is already in use
-            $existing_record = $DB->get_record('tool_davidcerezal', ['name' => $data['name'], 'courseid' => (int)$data['courseid']]);
-            if ($existing_record && $existing_record->id !== $data['rowid']){
+            // Check if the name is already in use.
+            $existingrecord = $DB->get_record('tool_davidcerezal', ['name' => $data['name'], 'courseid' => (int)$data['courseid']]);
+            if ($existingrecord && $existingrecord->id !== $data['rowid']){
                 $errors['name'] = get_string('error_name_unique', 'tool_davidcerezal');
             }
         }
