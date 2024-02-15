@@ -15,6 +15,8 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
+ * Edit tool_davidcerezal record.
+ * 
  * @package   tool_davidcerezal
  * @category  admin
  * @copyright 2024, David Cerezal <david.cerezal@moodle.com>
@@ -49,7 +51,7 @@ $PAGE->set_url($pageurl);
 
 // Fetch data for editing if row ID is provided.
 if ($rowid) {
-    $recordrow = $DB->get_record('tool_davidcerezal', array('id' => $rowid));
+    $recordrow = $DB->get_record('tool_davidcerezal', ['id' => $rowid]);
 }
 
 // Create the form - Prepare form action URL.
@@ -90,7 +92,7 @@ if ($data = $form->get_data()) {
     if (!$rowid && !$recordrow) {
         $record->timecreated = time();
         $rowid = $DB->insert_record('tool_davidcerezal', $record);
-        $recordrow = $DB->get_record('tool_davidcerezal', array('id' => $rowid));
+        $recordrow = $DB->get_record('tool_davidcerezal', ['id' => $rowid]);
     }
 
     if ($rowid && $recordrow) {

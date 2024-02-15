@@ -15,6 +15,8 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
+ * Links and settings
+ * 
  * @package   tool_davidcerezal
  * @category  admin
  * @copyright 2024, David Cerezal <david.cerezal@moodle.com>

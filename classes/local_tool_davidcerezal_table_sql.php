@@ -45,11 +45,12 @@ class local_tool_davidcerezal_table_sql extends table_sql {
     /** @var int The course id records will be displayed for. */
     protected $courseid;
 
-
     /**
      * Sets up the table.
+     * @param int $courseid The course id records will be displayed for.
+     * @param string $url The url to use for the table.
      */
-    public function __construct($courseid, $url) {
+    public function __construct(int $courseid, string $url) {
         parent::__construct('davidcerezal');
         $this->courseid = $courseid;
 
@@ -83,7 +84,7 @@ class local_tool_davidcerezal_table_sql extends table_sql {
         $this->set_default_per_page(25);
     }
 
-      /**
+    /**
      * Builds the SQL query.
      *
      * @param bool $count When true, return the count SQL.
@@ -100,7 +101,7 @@ class local_tool_davidcerezal_table_sql extends table_sql {
         return [$sql, $params];
     }
 
-     /**
+    /**
      * Query the DB.
      *
      * @param int $pagesize size of page for paginated displayed table.
@@ -112,7 +113,6 @@ class local_tool_davidcerezal_table_sql extends table_sql {
         list($sql, $params) = $this->get_sql_and_params();
         $this->rawdata = $DB->get_records_sql($sql, $params, $this->get_page_start(), $this->get_page_size());
     }
-
 
     /**
      * Formats the columns.

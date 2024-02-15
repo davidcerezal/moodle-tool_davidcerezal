@@ -15,6 +15,8 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
+ * Form for the tool_davidcerezal plugin.
+ * 
  * @package   tool_davidcerezal
  * @category  admin
  * @copyright 2024, David Cerezal <david.cerezal@moodle.com>
@@ -30,6 +32,7 @@ require_once($CFG->libdir.'/formslib.php');
 
 /*
  * This class defines the form for adding a new record to the tool_davidcerezal table
+ * @package tool_davidcerezal
  */
 class simpledavidcerezal_form extends moodleform {
 
@@ -59,7 +62,7 @@ class simpledavidcerezal_form extends moodleform {
 
         $mform->addElement('hidden', 'rowid');
         $mform->setType('rowid', PARAM_INT);
-        
+
         $this->add_action_buttons();
     }
 

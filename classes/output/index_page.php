@@ -15,6 +15,8 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
+ * Index page for the tool_davidcerezal plugin.
+ * 
  * @package   tool_davidcerezal
  * @category  admin
  * @copyright 2024, David Cerezal <david.cerezal@moodle.com>
@@ -31,7 +33,7 @@ use table_sql;
 
 /**
  * Class index_page
- * @package tool_davidcerezal\output
+ * @package tool_davidcerezal
  */
 class index_page implements renderable, templatable {
 
@@ -41,9 +43,15 @@ class index_page implements renderable, templatable {
     /** @var table_sql $outpatabletable table with db info to be displayed. */
     private $outpatabletable = null;
 
+    /**
+     * Constructor.
+     *
+     * @param string $tableheader
+     * @param table_sql $outpatabletable
+     */
     public function __construct(string $tableheader, table_sql $outpatabletable) {
         $this->tableheader = $tableheader;
-        $this->outpatabletable = $outpatabletable;   
+        $this->outpatabletable = $outpatabletable;
     }
 
     /**
@@ -56,10 +64,10 @@ class index_page implements renderable, templatable {
         $data->tableheader = $this->tableheader;
         $pagedefaultperpage = $this->outpatabletable->get_default_per_page();
 
-        ob_start(); // Start output buffering
-        $this->outpatabletable->out($pagedefaultperpage, true); // Output captured here
-        $html_output = ob_get_clean();
-        $data->outpatabletable = $html_output;
+        ob_start(); // Start output buffering.
+        $this->outpatabletable->out($pagedefaultperpage, true); // Output captured here.
+        $htmloutput = ob_get_clean();
+        $data->outpatabletable = $htmloutput;
 
         return $data;
     }
