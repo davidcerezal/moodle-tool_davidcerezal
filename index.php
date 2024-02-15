@@ -48,18 +48,12 @@ $PAGE->set_url($pageurl);
 $PAGE->set_title(get_string('pluginname', 'tool_davidcerezal'));
 $PAGE->set_heading(get_string('pluginname', 'tool_davidcerezal'));
 
+
+$outputtable = new local_tool_davidcerezal_table_sql($courseid, $pageurl);
+$renderable = new index_page('David Admin plugin\'s ', $outputtable, $courseid);
+
 // Print row tables.
 $output = $PAGE->get_renderer('tool_davidcerezal');
-
 echo $output->header();
-$outputtable = new local_tool_davidcerezal_table_sql($courseid, $pageurl);
-$renderable = new index_page('David Admin plugin\'s ', $outputtable);
 echo $output->render($renderable);
-
-// Show initial edit icon.
-if (has_capability('tool/davidcerezal:edit', $coursecontext)) {
-    $editlink = new moodle_url('/admin/tool/davidcerezal/edit.php', ['course_id' => $courseid]);
-    echo html_writer::link($editlink, get_string('editentry', 'tool_davidcerezal'));
-}
-
 echo $output->footer();

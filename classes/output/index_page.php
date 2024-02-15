@@ -30,6 +30,7 @@ use renderer_base;
 use templatable;
 use stdClass;
 use table_sql;
+use core\context;
 
 /**
  * Class index_page
@@ -44,15 +45,24 @@ class index_page implements renderable, templatable {
     /** @var table_sql $outpatabletable table with db info to be displayed. */
     private $outpatabletable = null;
 
+    /** @var int $courseid id of the course. */
+    private $courseid = null;
+
     /**
      * Constructor.
      *
      * @param string $tableheader
      * @param table_sql $outpatabletable
+     * @param int $courseid
      */
-    public function __construct(string $tableheader, table_sql $outpatabletable) {
+    public function __construct(
+        string $tableheader, 
+        table_sql $outpatabletable,
+        int $courseid
+    ) {
         $this->tableheader = $tableheader;
         $this->outpatabletable = $outpatabletable;
+        $this->courseid = $courseid;
     }
 
     /**
@@ -62,6 +72,8 @@ class index_page implements renderable, templatable {
      * @return stdClass An object containing the data to be used in the template.
      */
     public function export_for_template(renderer_base $output): stdClass {
+        $coursecontext = \context_course::instance($this->courseid);
+
         $data = new stdClass();
         $data->tableheader = $this->tableheader;
         $pagedefaultperpage = $this->outpatabletable->get_default_per_page();
@@ -70,6 +82,13 @@ class index_page implements renderable, templatable {
         $this->outpatabletable->out($pagedefaultperpage, true); // Output captured here.
         $htmloutput = ob_get_clean();
         $data->outpatabletable = $htmloutput;
+
+        $data->editlink = false;
+        if (has_capability('tool/davidcerezal:edit', $coursecontext)) {
+            $editlink = new \moodle_url('/admin/tool/davidcerezal/edit.php', ['course_id' => $this->courseid]);
+            $data->editlink = \html_writer::link($editlink, get_string('editentry', 'tool_davidcerezal'));
+        }
+
 
         return $data;
     }
