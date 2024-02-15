@@ -15,7 +15,10 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @package   tool_dravek
+ * Form for the tool_davidcerezal plugin.
+ *
+ * @package   tool_davidcerezal
+ * @category  admin
  * @copyright 2024, David Cerezal <david.cerezal@moodle.com>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -27,8 +30,10 @@ use moodleform;
 use stdClass;
 require_once($CFG->libdir.'/formslib.php');
 
-/*
- * This class defines the form for adding a new record to the tool_davidcerezal table
+/**
+ * Form for adding and editing davidcerezal records.
+ *
+ * @package tool_davidcerezal
  */
 class simpledavidcerezal_form extends moodleform {
 
@@ -47,11 +52,18 @@ class simpledavidcerezal_form extends moodleform {
         ];
 
         $mform = $this->_form;
-        $mform->addElement('text', 'name', get_string('entryname', 'tool_davidcerezal'));
+        $mform->addElement('text', 'name', get_string('name', 'tool_davidcerezal'));
+        $mform->setType('name', PARAM_TEXT);
+
         $mform->addElement('checkbox', 'completed', get_string('completed', 'tool_davidcerezal'));
-        $mform->addElement('editor', 'description_editor', get_string('content', 'tool_davidcerezal'), null, $textfieldoptions);
+        $mform->addElement('editor', 'description_editor', get_string('message', 'tool_davidcerezal'), null, $textfieldoptions);
+
         $mform->addElement('hidden', 'courseid');
+        $mform->setType('courseid', PARAM_INT);
+
         $mform->addElement('hidden', 'rowid');
+        $mform->setType('rowid', PARAM_INT);
+
         $this->add_action_buttons();
     }
 
@@ -73,18 +85,17 @@ class simpledavidcerezal_form extends moodleform {
         // Validate 'name' field.
         if (empty($data['name'])) {
             $errors['name'] = get_string('error_name_required', 'tool_davidcerezal');
-        } elseif (strlen($data['name']) > 255) {
+        } else if (strlen($data['name']) > 255) {
             $errors['name'] = get_string('error_name_length', 'tool_davidcerezal');
         } else {
             // Check if the name is already in use.
             $existingrecord = $DB->get_record('tool_davidcerezal', ['name' => $data['name'], 'courseid' => (int)$data['courseid']]);
-            if ($existingrecord && $existingrecord->id !== $data['rowid']){
+            if ($existingrecord && $existingrecord->id !== $data['rowid']) {
                 $errors['name'] = get_string('error_name_unique', 'tool_davidcerezal');
             }
         }
 
         return $errors;
     }
-
- 
 }
+

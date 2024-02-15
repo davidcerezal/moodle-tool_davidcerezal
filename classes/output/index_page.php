@@ -15,7 +15,10 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @package   tool_davicerezal
+ * Index page for the tool_davidcerezal plugin.
+ *
+ * @package   tool_davidcerezal
+ * @category  admin
  * @copyright 2024, David Cerezal <david.cerezal@moodle.com>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -26,28 +29,48 @@ use renderable;
 use renderer_base;
 use templatable;
 use stdClass;
+use table_sql;
 
 /**
  * Class index_page
- * @package tool_davidcerezal\output
+ *
+ * @package tool_davidcerezal
  */
 class index_page implements renderable, templatable {
 
     /** @var string $sometext Some text to show how to pass data to a template. */
-    private $sometext = null;
+    private $tableheader = null;
 
-    public function __construct($sometext) {
-        $this->sometext = $sometext;
+    /** @var table_sql $outpatabletable table with db info to be displayed. */
+    private $outpatabletable = null;
+
+    /**
+     * Constructor.
+     *
+     * @param string $tableheader
+     * @param table_sql $outpatabletable
+     */
+    public function __construct(string $tableheader, table_sql $outpatabletable) {
+        $this->tableheader = $tableheader;
+        $this->outpatabletable = $outpatabletable;
     }
 
     /**
      * Export this data so it can be used as the context for a mustache template.
      *
-     * @return stdClass
+     * @param renderer_base $output The renderer that is being used to display the data.
+     * @return stdClass An object containing the data to be used in the template.
      */
     public function export_for_template(renderer_base $output): stdClass {
         $data = new stdClass();
-        $data->sometext = $this->sometext;
+        $data->tableheader = $this->tableheader;
+        $pagedefaultperpage = $this->outpatabletable->get_default_per_page();
+
+        ob_start(); // Start output buffering.
+        $this->outpatabletable->out($pagedefaultperpage, true); // Output captured here.
+        $htmloutput = ob_get_clean();
+        $data->outpatabletable = $htmloutput;
+
         return $data;
     }
 }

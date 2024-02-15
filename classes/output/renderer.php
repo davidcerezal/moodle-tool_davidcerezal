@@ -15,7 +15,10 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @package   tool_davicerezal
+ * Renderer for the tool_davidcerezal plugin.
+ *
+ * @package   tool_davidcerezal
+ * @category  admin
  * @copyright 2024, David Cerezal <david.cerezal@moodle.com>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -26,7 +29,7 @@ use plugin_renderer_base;
 
 /**
  * Class renderer
- * @package tool_davidcerezal\output
+ * @package tool_davidcerezal
  */
 class renderer extends plugin_renderer_base {
     /**

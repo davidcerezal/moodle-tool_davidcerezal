@@ -15,7 +15,10 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @package   tool_davicerezal
+ * Strings for component 'tool_davidcerezal', language 'en'.
+ *
+ * @package   tool_davidcerezal
+ * @category  admin
  * @copyright 2024, David Cerezal <david.cerezal@moodle.com>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -29,5 +32,6 @@ $string['completed'] = 'Completed';
 $string['priority'] = 'Priority';
 $string['timecreated'] = 'Time Created';
 $string['timemodified'] = 'Time Modified';
-$string['editentry'] = 'Editar mensaje Modified';
+$string['message'] = 'Contenido';
+$string['editentry'] = 'Editar row';
 $string['delete'] = 'Edit entry {$a}';

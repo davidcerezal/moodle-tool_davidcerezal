@@ -15,7 +15,10 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @package   tool_davicerezal
+ * Main upgrade tasks to be executed on plugin version bump.
+ *
+ * @package   tool_davidcerezal
+ * @category  admin
  * @copyright 2024, David Cerezal <david.cerezal@moodle.com>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -44,7 +47,7 @@ function xmldb_tool_davidcerezal_upgrade($oldversion) {
 
         $table->add_key('primary', XMLDB_KEY_PRIMARY, ['id']);
 
-        // Create the table if it doesn't exist
+        // Create the table if it doesn't exist.
         if (!$dbman->table_exists($table)) {
             $dbman->create_table($table);
         }
