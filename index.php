@@ -24,6 +24,9 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+use tool_davidcerezal\local_tool_davidcerezal_table_sql;
+use tool_davidcerezal\output\index_page;
+
 require_once(__DIR__ . '/../../../config.php');
 require_once($CFG->libdir.'/adminlib.php');
 
@@ -35,27 +38,38 @@ global $DB;
 
 $courseid = required_param('course_id', PARAM_INT);
 $coursecontext = context_course::instance($courseid);
+$pageurl = new moodle_url('/admin/tool/davidcerezal/index.php', ['course_id' => $courseid]);
 
 // Define the page layout
 $PAGE->set_context(context_system::instance());
 $PAGE->set_pagelayout('admin');
+$PAGE->set_url($pageurl);
 $PAGE->set_title(get_string('pluginname', 'tool_davidcerezal'));
 $PAGE->set_heading(get_string('pluginname', 'tool_davidcerezal'));
-echo $OUTPUT->header();
 
 // Print row tables
-print_database_table('tool_davidcerezal', $coursecontext);
+$output = $PAGE->get_renderer('tool_davidcerezal');
 
+echo $output->header();
+$outputtable = new local_tool_davidcerezal_table_sql($courseid, $pageurl);
+$renderable = new index_page('David Admin plugin\'s ', $outputtable);
+echo $output->render($renderable);
+
+//Show initial edit icon
 if (has_capability('tool/davidcerezal:edit', $coursecontext)) {
     $editlink = new moodle_url('/admin/tool/davidcerezal/edit.php', ['course_id' => $courseid]);
     echo html_writer::link($editlink, get_string('editentry', 'tool_davidcerezal'));
 }
-echo $OUTPUT->footer();
+
+echo $output->footer();
+
+
 
 
 /**
  * Print a table with all data and headers from a database table.
  *
+ * @deprecated version since v1.2 use renderer instead
  * @param string $tablename The name of the database table.
  * @param context $coursecontext The context of the course.
  */
@@ -89,7 +103,7 @@ function print_database_table($tablename, $coursecontext) {
             }
         }
         $action = new moodle_url('/admin/tool/davidcerezal/edit.php', ['course_id' => $row->courseid, 'row_id' => $row->id]);
-        $tablerow[] = html_writer::link($action, get_string('edit', 'tool_davidcerezal', $row->name));
+        $tablerow[] = html_writer::link($action, get_string('editentry', 'tool_davidcerezal'));
         $table->data[] = $tablerow;
     }
 

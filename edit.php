@@ -36,6 +36,16 @@ $courseid = required_param('course_id', PARAM_INT);
 $rowid = optional_param('row_id', null, PARAM_INT);
 $context = context_course::instance($courseid);
 
+$urlparams = ['course_id' => $courseid];
+if (isset($rowid)) {
+    $urlparams['row_id'] = $rowid;
+}
+
+$pageurl = new moodle_url('/admin/tool/davidcerezal/index.php', $urlparams);
+$PAGE->set_context(context_system::instance());
+$PAGE->set_pagelayout('admin');
+$PAGE->set_url($pageurl);
+
 // Fetch data for editing if row ID is provided
 if ($rowid) {
     $recordrow = $DB->get_record('tool_davidcerezal', array('id' => $rowid));
@@ -46,7 +56,7 @@ $actionurl = new moodle_url('/admin/tool/davidcerezal/edit.php', ['course_id' =>
 $form = new \tool_davidcerezal\form\simpledavidcerezal_form($actionurl, [1, $context]);
 
 // Initialize form data
-$data = (object)['courseid' => $courseid, 'rowid' => $rowid];
+$data = (object)['courseid' => $courseid, 'rowid' => $rowid, 'descriptionformat' => FORMAT_HTML];
 
 // Populate form data if row ID is provided
 if ($rowid && $recordrow) {
@@ -94,7 +104,6 @@ if ($data = $form->get_data()) {
         // Update the existing record
         $record->id = $rowid;
         $record->description = $data->description;
-        $record->descriptionformat = $data->descriptionformat;
         $DB->update_record('tool_davidcerezal', $record);
     }
 

@@ -26,6 +26,7 @@ use renderable;
 use renderer_base;
 use templatable;
 use stdClass;
+use table_sql;
 
 /**
  * Class index_page
@@ -34,10 +35,14 @@ use stdClass;
 class index_page implements renderable, templatable {
 
     /** @var string $sometext Some text to show how to pass data to a template. */
-    private $sometext = null;
+    private $tableheader = null;
 
-    public function __construct($sometext) {
-        $this->sometext = $sometext;
+    /** @var table_sql $outpatabletable table with db info to be displayed. */
+    private $outpatabletable = null;
+
+    public function __construct(string $tableheader, table_sql $outpatabletable) {
+        $this->tableheader = $tableheader;
+        $this->outpatabletable = $outpatabletable;   
     }
 
     /**
@@ -47,7 +52,14 @@ class index_page implements renderable, templatable {
      */
     public function export_for_template(renderer_base $output): stdClass {
         $data = new stdClass();
-        $data->sometext = $this->sometext;
+        $data->tableheader = $this->tableheader;
+        $pagedefaultperpage = $this->outpatabletable->get_default_per_page();
+
+        ob_start(); // Start output buffering
+        $this->outpatabletable->out($pagedefaultperpage, true); // Output captured here
+        $html_output = ob_get_clean();
+        $data->outpatabletable = $html_output;
+
         return $data;
     }
 }

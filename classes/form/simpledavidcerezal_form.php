@@ -47,11 +47,18 @@ class simpledavidcerezal_form extends moodleform {
         ];
 
         $mform = $this->_form;
-        $mform->addElement('text', 'name', get_string('entryname', 'tool_davidcerezal'));
+        $mform->addElement('text', 'name', get_string('name', 'tool_davidcerezal'));
+        $mform->setType('name', PARAM_TEXT);
+
         $mform->addElement('checkbox', 'completed', get_string('completed', 'tool_davidcerezal'));
-        $mform->addElement('editor', 'description_editor', get_string('content', 'tool_davidcerezal'), null, $textfieldoptions);
+        $mform->addElement('editor', 'description_editor', get_string('message', 'tool_davidcerezal'), null, $textfieldoptions);
+
         $mform->addElement('hidden', 'courseid');
+        $mform->setType('courseid', PARAM_INT);
+
         $mform->addElement('hidden', 'rowid');
+        $mform->setType('rowid', PARAM_INT);
+        
         $this->add_action_buttons();
     }
 

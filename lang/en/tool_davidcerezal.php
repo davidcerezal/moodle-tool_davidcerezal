@@ -29,5 +29,6 @@ $string['completed'] = 'Completed';
 $string['priority'] = 'Priority';
 $string['timecreated'] = 'Time Created';
 $string['timemodified'] = 'Time Modified';
-$string['editentry'] = 'Editar mensaje Modified';
+$string['message'] = 'Contenido';
+$string['editentry'] = 'Editar row';
 $string['delete'] = 'Edit entry {$a}';
