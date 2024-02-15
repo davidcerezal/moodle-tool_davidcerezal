@@ -16,7 +16,7 @@
 
 /**
  * Strings for component 'tool_davidcerezal', language 'en'.
- * 
+ *
  * @package   tool_davidcerezal
  * @category  admin
  * @copyright 2024, David Cerezal <david.cerezal@moodle.com>

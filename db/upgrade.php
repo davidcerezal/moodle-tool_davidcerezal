@@ -16,7 +16,7 @@
 
 /**
  * Main upgrade tasks to be executed on plugin version bump.
- * 
+ *
  * @package   tool_davidcerezal
  * @category  admin
  * @copyright 2024, David Cerezal <david.cerezal@moodle.com>

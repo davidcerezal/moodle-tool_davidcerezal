@@ -16,7 +16,7 @@
 
 /**
  * Renderer for the tool_davidcerezal plugin.
- * 
+ *
  * @package   tool_davidcerezal
  * @category  admin
  * @copyright 2024, David Cerezal <david.cerezal@moodle.com>

@@ -16,7 +16,7 @@
 
 /**
  * Index page for the tool_davidcerezal plugin.
- * 
+ *
  * @package   tool_davidcerezal
  * @category  admin
  * @copyright 2024, David Cerezal <david.cerezal@moodle.com>
@@ -33,6 +33,7 @@ use table_sql;
 
 /**
  * Class index_page
+ *
  * @package tool_davidcerezal
  */
 class index_page implements renderable, templatable {
@@ -57,7 +58,8 @@ class index_page implements renderable, templatable {
     /**
      * Export this data so it can be used as the context for a mustache template.
      *
-     * @return stdClass
+     * @param renderer_base $output The renderer that is being used to display the data.
+     * @return stdClass An object containing the data to be used in the template.
      */
     public function export_for_template(renderer_base $output): stdClass {
         $data = new stdClass();

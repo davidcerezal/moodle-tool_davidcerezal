@@ -16,7 +16,7 @@
 
 /**
  * Form for the tool_davidcerezal plugin.
- * 
+ *
  * @package   tool_davidcerezal
  * @category  admin
  * @copyright 2024, David Cerezal <david.cerezal@moodle.com>
@@ -30,8 +30,9 @@ use moodleform;
 use stdClass;
 require_once($CFG->libdir.'/formslib.php');
 
-/*
- * This class defines the form for adding a new record to the tool_davidcerezal table
+/**
+ * Form for adding and editing davidcerezal records.
+ *
  * @package tool_davidcerezal
  */
 class simpledavidcerezal_form extends moodleform {
