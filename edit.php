@@ -15,23 +15,24 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @package   tool_davicerezal
+ * @package   tool_davidcerezal
+ * @category  admin
  * @copyright 2024, David Cerezal <david.cerezal@moodle.com>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-// Include Moodle configuration and necessary libraries
+// Include Moodle configuration and necessary libraries.
 require_once(__DIR__ . '/../../../config.php');
 require_once($CFG->libdir.'/adminlib.php');
 
-// Ensure user is logged in and has necessary capability
+// Ensure user is logged in and has necessary capability.
 require_login();
 require_capability('moodle/site:config', context_system::instance());
 
-// Initialize global $DB variable
+// Initialize global $DB variable.
 global $DB;
 
-// Retrieve parameters
+// Retrieve parameters.
 $courseid = required_param('course_id', PARAM_INT);
 $rowid = optional_param('row_id', null, PARAM_INT);
 $context = context_course::instance($courseid);
@@ -46,25 +47,25 @@ $PAGE->set_context(context_system::instance());
 $PAGE->set_pagelayout('admin');
 $PAGE->set_url($pageurl);
 
-// Fetch data for editing if row ID is provided
+// Fetch data for editing if row ID is provided.
 if ($rowid) {
     $recordrow = $DB->get_record('tool_davidcerezal', array('id' => $rowid));
 }
 
-// Create the form - Prepare form action URL
+// Create the form - Prepare form action URL.
 $actionurl = new moodle_url('/admin/tool/davidcerezal/edit.php', ['course_id' => $courseid, 'row_id' => $rowid]);
 $form = new \tool_davidcerezal\form\simpledavidcerezal_form($actionurl, [1, $context]);
 
-// Initialize form data
+// Initialize form data.
 $data = (object)['courseid' => $courseid, 'rowid' => $rowid, 'descriptionformat' => FORMAT_HTML];
 
-// Populate form data if row ID is provided
+// Populate form data if row ID is provided.
 if ($rowid && $recordrow) {
     $data->name = $recordrow->name;
     $data->completed = $recordrow->completed;
     $data->description = $recordrow->description;
 }
-// Call file_prepare_standard_editor() before setting the data to the form
+// Call file_prepare_standard_editor() before setting the data to the form.
 if ($rowid && $recordrow) {
     $data = file_prepare_standard_editor($data, 'description', [
         'trusttext' => true,
@@ -75,10 +76,10 @@ if ($rowid && $recordrow) {
         ], $context, 'tool_davidcerezal', 'description', $rowid);
 }
 
-// Set form data
+// Set form data.
 $form->set_data($data);
 
-// Process form submission
+// Process form submission.
 if ($data = $form->get_data()) {
     $record = new stdClass();
     $record->name = $data->name;
@@ -93,7 +94,7 @@ if ($data = $form->get_data()) {
     }
 
     if ($rowid && $recordrow) {
-        // Call file_postupdate_standard_editor() after calling get_data()
+        // Call file_postupdate_standard_editor() after calling get_data().
         $data = file_postupdate_standard_editor($data, 'description', [
             'trusttext' => true,
             'subdirs' => true,
@@ -101,17 +102,17 @@ if ($data = $form->get_data()) {
             'context' => $context,
         ], $context, 'tool_davidcerezal', 'description', $rowid);
 
-        // Update the existing record
+        // Update the existing record.
         $record->id = $rowid;
         $record->description = $data->description;
         $DB->update_record('tool_davidcerezal', $record);
     }
 
-    // Redirect after successful operation
+    // Redirect after successful operation.
     redirect(new moodle_url('/admin/tool/davidcerezal/index.php', ['course_id' => $courseid]));
     exit;
 } else {
-    // Form was not submitted or validation failed, display the form
+    // Form was not submitted or validation failed, display the form.
     echo $OUTPUT->header();
     $form->display();
     echo $OUTPUT->footer();

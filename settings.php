@@ -15,10 +15,14 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @package   tool_davicerezal
+ * Administration settings for the David Cerezal tool.
+ *
+ * @package   tool_davidcerezal
+ * @category  admin
  * @copyright 2024, David Cerezal <david.cerezal@moodle.com>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+
 
 defined('MOODLE_INTERNAL') || die;
 
@@ -29,4 +33,3 @@ $temp = new admin_externalpage(
     "{$CFG->wwwroot}/admin/tool/davidcerezal/index.php",
     'moodle/site:config'
 );
-

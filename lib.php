@@ -15,7 +15,8 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @package   tool_davicerezal
+ * @package   tool_davidcerezal
+ * @category  admin
  * @copyright 2024, David Cerezal <david.cerezal@moodle.com>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -53,10 +54,10 @@ function tool_davidcerezal_extend_navigation_course($navigation, $course, $conte
  * @param array $options
  * @throws moodle_exception
  */
-function tool_davidcerezal_pluginfile($course, $cm, $context, $filearea, $args, $forcedownload, array $options=array()) {
+function tool_davidcerezal_pluginfile($course, $cm, $context, $filearea, $args, $forcedownload, array $options = []) {
     global $CFG, $DB;
 
-    // Security checks
+    // Security checks.
     require_course_login($course, true, $cm);
 
     $fs = get_file_storage();
@@ -65,7 +66,7 @@ function tool_davidcerezal_pluginfile($course, $cm, $context, $filearea, $args, 
         send_file_not_found();
     }
 
-    // Serve the file
+    // Serve the file.
     send_stored_file($file, null, 0, $forcedownload, $options);
 }
 

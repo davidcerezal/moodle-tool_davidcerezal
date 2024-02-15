@@ -19,9 +19,10 @@
  *
  * This file contains links and settings used by tool_davidcerezal
  *
- * @package    tool_davidcerezal
- * @copyright  2024, David Cerezal <david.cerezal@moodle.com>
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package   tool_davidcerezal
+ * @category  admin
+ * @copyright 2024, David Cerezal <david.cerezal@moodle.com>
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 namespace tool_davidcerezal;
