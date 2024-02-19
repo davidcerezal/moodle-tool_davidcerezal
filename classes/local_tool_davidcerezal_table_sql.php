@@ -30,12 +30,11 @@ use context_course;
 use html_writer;
 use moodle_url;
 use stdClass;
+use table_sql;
 
 defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->libdir . '/tablelib.php');
-
-use table_sql;
 
 /**
  * Table class for the davidcerezal table.

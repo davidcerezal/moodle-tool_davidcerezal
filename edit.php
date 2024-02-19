@@ -77,8 +77,7 @@ if ($rowid && $recordrow) {
         'context' => $context,
         'noclean' => true,
         ], $context, 'tool_davidcerezal', 'description', $rowid);
-} 
-
+}
 // Set form data.
 $form->set_data($data);
 
@@ -88,11 +87,9 @@ if ($data = $form->get_data()) {
     $record->name = $data->name;
     $record->courseid = $data->courseid;
     $record->completed = isset($data->completed) ? 1 : 0;
-    $record->timemodified = time();
 
     if (!$rowid && !$recordrow) {
-        $record->timecreated = time();
-        $rowid = $DB->insert_record('tool_davidcerezal', $record);
+        $rowid = \tool_davidcerezal\dblib::insert($record);
         $recordrow = $DB->get_record('tool_davidcerezal', ['id' => $rowid]);
     }
 
@@ -108,7 +105,7 @@ if ($data = $form->get_data()) {
         // Update the existing record.
         $record->id = $rowid;
         $record->description = $data->description;
-        $DB->update_record('tool_davidcerezal', $record);
+        $rowid = \tool_davidcerezal\dblib::insert($record);
     }
 
     // Redirect after successful operation.
