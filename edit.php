@@ -35,7 +35,7 @@ require_capability('moodle/site:config', context_system::instance());
 global $DB;
 
 // Retrieve parameters.
-$courseid = required_param('course_id', PARAM_INT);
+$courseid = optional_param('course_id', null, PARAM_INT);
 $rowid = optional_param('row_id', null, PARAM_INT);
 $context = context_course::instance($courseid);
 
@@ -44,12 +44,13 @@ if (isset($rowid)) {
     $urlparams['row_id'] = $rowid;
 }
 
-$pageurl = new moodle_url('/admin/tool/davidcerezal/index.php', $urlparams);
+$pageurl = new moodle_url('/admin/tool/davidcerezal/edit.php', $urlparams);
 $PAGE->set_context(context_system::instance());
 $PAGE->set_pagelayout('admin');
 $PAGE->set_url($pageurl);
 
 // Fetch data for editing if row ID is provided.
+$recordrow = null;
 if ($rowid) {
     $recordrow = $DB->get_record('tool_davidcerezal', ['id' => $rowid]);
 }
@@ -76,7 +77,7 @@ if ($rowid && $recordrow) {
         'context' => $context,
         'noclean' => true,
         ], $context, 'tool_davidcerezal', 'description', $rowid);
-}
+} 
 
 // Set form data.
 $form->set_data($data);

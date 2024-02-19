@@ -68,6 +68,7 @@ class local_tool_davidcerezal_table_sql extends table_sql {
 
         ];
 
+        $this->set_attribute('id', 'tool_davidcerezal_table');
         $this->define_columns(array_keys($columnheaders));
         $this->define_headers(array_values($columnheaders));
         $this->define_table_configs();

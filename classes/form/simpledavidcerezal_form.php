@@ -90,7 +90,7 @@ class simpledavidcerezal_form extends moodleform {
         } else {
             // Check if the name is already in use.
             $existingrecord = $DB->get_record('tool_davidcerezal', ['name' => $data['name'], 'courseid' => (int)$data['courseid']]);
-            if ($existingrecord && $existingrecord->id !== $data['rowid']) {
+            if ($existingrecord && (int)$existingrecord->id !== $data['rowid']) {
                 $errors['name'] = get_string('error_name_unique', 'tool_davidcerezal');
             }
         }
