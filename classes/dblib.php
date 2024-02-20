@@ -24,12 +24,17 @@
  */
 
 namespace tool_davidcerezal;
- 
+
 // Include Moodle configuration and necessary libraries.
 use stdClass;
 
 
-class dblib {
+/**
+ * Db functions to update, insert and get records.
+ *
+ * @package  tool_davidcerezal
+ */
+class dlib {
 
     /**
      * Update a record.

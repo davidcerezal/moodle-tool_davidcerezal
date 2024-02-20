@@ -27,13 +27,24 @@ namespace tool_davidcerezal;
 use tool_davidcerezal\dblib;
 use advanced_testcase;
 
+/**
+ * Test Dblib class.
+ *
+ * @package     tool_davidcerezal
+ * @covers \tool_davidcereza_test\dblib
+ * @copyright   2024 David Cerezal
+ */
 class db_test extends advanced_testcase {
 
+    /**
+     * Summary of test_insert.
+     * @return void
+     */
     public function test_insert() {
         global $DB;
         $this->resetAfterTest(true);
 
-        //Data to be stored.
+        // Data to be stored.
         $course = self::getDataGenerator()->create_course();
         $data = (object)[
                 'name' => 'new name',
@@ -44,8 +55,8 @@ class db_test extends advanced_testcase {
 
         $id = dblib::insert($data);
 
-        //Find the record without dblib to avoid possible lib fails.
-        $record = $DB->get_record('tool_davidcerezal', ['id' => $id]);
+        // Find the record without dblib to avoid possible lib fails.
+        $record = $DB->get_record('tool_davidcerezal', ['id' => $id,]);
 
         $this->assertEquals('new name', $record->name);
         $this->assertEquals('0', $record->completed);
@@ -53,11 +64,15 @@ class db_test extends advanced_testcase {
         $this->assertEquals('desc...', $record->description);
     }
 
+    /**
+     * Summary of test_update_fails
+     * @return void
+     */
     public function test_update_fails() {
         global $DB;
         $this->resetAfterTest(true);
 
-        //Data to be stored.
+        // Data to be stored.
         $course = self::getDataGenerator()->create_course();
         $data = (object)[
                 'name' => 'new name',
@@ -66,7 +81,7 @@ class db_test extends advanced_testcase {
                 'description_editor' => [
                         'text' => 'desc...',
                         'format' => FORMAT_HTML
-                ]
+                ],
         ];
 
         $id = dblib::insert($data);
@@ -74,14 +89,18 @@ class db_test extends advanced_testcase {
         $data->name = "Newst name v2";
         $result = dblib::update($data);
 
-        $this->assertEquals(False, $result);
+        $this->assertEquals(false, $result);
     }
 
+    /**
+     * Summary of test_update_ok
+     * @return void
+     */
     public function test_update_ok() {
         global $DB;
         $this->resetAfterTest(true);
 
-        //Data to be stored.
+        // Data to be stored.
         $course = self::getDataGenerator()->create_course();
         $data = (object)[
                 'name' => 'new name',
@@ -90,7 +109,7 @@ class db_test extends advanced_testcase {
                 'description_editor' => [
                         'text' => 'desc...',
                         'format' => FORMAT_HTML
-                ]
+                ],
         ];
 
         $id = dblib::insert($data);
@@ -100,7 +119,7 @@ class db_test extends advanced_testcase {
         $result = dblib::update($data);
 
         //Find the record without dblib to avoid possible lib fails.
-        $record = $DB->get_record('tool_davidcerezal', ['id' => $id]);
+        $record = $DB->get_record('tool_davidcerezal', ['id' => $id,]);
 
         $this->assertEquals('Newst name v2', $record->name);
     }

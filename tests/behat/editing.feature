@@ -15,7 +15,7 @@ Feature: Creating, editing and deleting entries
   Scenario: create an entry
     When I am on the "C1" "Course" page logged in as "admin"
     And I navigate to "David Cerezal Demo" in current page administration
-    And I click on "Editar row" "link" 
+    And I click on "Editar row" "link"
     And I set the following fields to these values:
       | Name      | test entry 1 |
       | Completed | 0            |
@@ -29,7 +29,7 @@ Feature: Creating, editing and deleting entries
   Scenario: edit an entry
     When I am on the "C1" "Course" page logged in as "admin"
     And I navigate to "David Cerezal Demo" in current page administration
-    And I click on "Editar row" "link" 
+    And I click on "Editar row" "link"
     And I set the following fields to these values:
       | Name      | test entry 1 |
       | Completed | 0            |
@@ -42,4 +42,4 @@ Feature: Creating, editing and deleting entries
     And the following should exist in the "tool_davidcerezal_table" table:
       | Name         | Completed |
       | test entry 1 | Yes       |
-    And I log out    
+    And I log out
