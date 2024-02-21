@@ -23,10 +23,12 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace tool_davidcerezal;
+ namespace tool_davidcerezal;
 
 // Include Moodle configuration and necessary libraries.
+use context_course;
 use stdClass;
+use tool_davidcerezal\event\entry_added;
 
 
 /**
@@ -34,7 +36,7 @@ use stdClass;
  *
  * @package  tool_davidcerezal
  */
-class dlib {
+class dblib {
 
     /**
      * Update a record.
@@ -65,7 +67,15 @@ class dlib {
         global $DB;
 
         $data->timecreated = time();
-        return $DB->insert_record('tool_davidcerezal', $data);
+        $result = $DB->insert_record('tool_davidcerezal', $data);
+        
+        if ($result) {
+            $context = context_course::instance($data->courseid);
+            $event = entry_added::create(['context' => $context, 'objectid' => $data->courseid]);
+            $event->trigger();
+        }
+
+        return $result;
     }
 
 }

@@ -26,12 +26,13 @@ namespace tool_davidcerezal;
 
 use tool_davidcerezal\dblib;
 use advanced_testcase;
+use tool_davidcerezal\event\entry_added;
 
 /**
  * Test Dblib class.
  *
  * @package     tool_davidcerezal
- * @covers \tool_davidcereza_test\dblib
+ * @covers      \tool_davidcerezal\dblib
  * @copyright   2024 David Cerezal
  */
 class db_test extends advanced_testcase {
@@ -56,7 +57,7 @@ class db_test extends advanced_testcase {
         $id = dblib::insert($data);
 
         // Find the record without dblib to avoid possible lib fails.
-        $record = $DB->get_record('tool_davidcerezal', ['id' => $id,]);
+        $record = $DB->get_record('tool_davidcerezal', ['id' => $id]);
 
         $this->assertEquals('new name', $record->name);
         $this->assertEquals('0', $record->completed);
@@ -80,7 +81,7 @@ class db_test extends advanced_testcase {
                 'courseid' => $course->id,
                 'description_editor' => [
                         'text' => 'desc...',
-                        'format' => FORMAT_HTML
+                        'format' => FORMAT_HTML,
                 ],
         ];
 
@@ -108,7 +109,7 @@ class db_test extends advanced_testcase {
                 'courseid' => $course->id,
                 'description_editor' => [
                         'text' => 'desc...',
-                        'format' => FORMAT_HTML
+                        'format' => FORMAT_HTML,
                 ],
         ];
 
@@ -118,9 +119,38 @@ class db_test extends advanced_testcase {
         $data->name = "Newst name v2";
         $result = dblib::update($data);
 
-        //Find the record without dblib to avoid possible lib fails.
-        $record = $DB->get_record('tool_davidcerezal', ['id' => $id,]);
+        // Find the record without dblib to avoid possible lib fails.
+        $record = $DB->get_record('tool_davidcerezal', ['id' => $id]);
 
         $this->assertEquals('Newst name v2', $record->name);
+    }
+
+    /**
+     * Test preset_deleted event.
+     */
+    public function test_entry_added_event() {
+        $this->resetAfterTest();
+        $this->setAdminUser();
+
+        // Create a preset.
+        $course = self::getDataGenerator()->create_course();
+        $coursecontext = \context_course::instance($course->id);
+        $params = [
+            'context' => $coursecontext,
+            'objectid' => $course->id,
+        ];
+        $event = entry_added::create($params);
+
+        // Triggering and capturing the event.
+        $sink = $this->redirectEvents();
+        $event->trigger();
+        $events = $sink->get_events();
+        $this->assertCount(1, $events);
+        $event = reset($events);
+
+        // Checking that the event contains the expected values.
+        $this->assertInstanceOf('\tool_davidcerezal\event\entry_added', $event);
+        $this->assertEquals($coursecontext, $event->get_context());
+        $this->assertEquals($course->id, $event->objectid);
     }
 }

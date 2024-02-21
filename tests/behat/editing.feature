@@ -43,3 +43,4 @@ Feature: Creating, editing and deleting entries
       | Name         | Completed |
       | test entry 1 | Yes       |
     And I log out
+    

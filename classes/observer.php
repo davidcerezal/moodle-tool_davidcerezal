@@ -15,26 +15,24 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Links and settings
- *
- * This file contains links and settings used by tool_davidcerezal
+ * Course content deleted observer.
  *
  * @package   tool_davidcerezal
  * @category  admin
  * @copyright 2024, David Cerezal <david.cerezal@moodle.com>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+defined('MOODLE_INTERNAL') || die;
 
-require_once(__DIR__ . '/../../../config.php');
-require_once($CFG->libdir.'/adminlib.php');
+class tool_davidcerezal_observer {
 
-require_login();
-require_sesskey();
-require_capability('moodle/site:config', context_system::instance());
-
-$courseid = optional_param('course_id', 2, PARAM_INT);
-
-if ($deleteid = optional_param('rowid', null, PARAM_INT)) {
-    // $DB->delete_records('tool_davidcerezal', ['id' => $deleteid]);
-    redirect(new moodle_url('/admin/tool/davidcerezal/index.php', ['course_id' => $courseid]));
+    /**
+     * On course_content_removed, remove all entries associated with the course.
+     * @param core\event\course_content_deleted $event
+     * @return void
+     */
+    public static function course_content_removed(\core\event\course_content_deleted $event) {
+        global $DB;
+        $DB->delete_records('tool_davidcerezal', ['courseid' => $event->courseid]);
+    }
 }
