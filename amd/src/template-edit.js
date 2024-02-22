@@ -21,95 +21,108 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-// import modal from 'core/modal_delete_cancel';
-// import {get_string as getString} from 'core/str';
-import Modal from 'core/modal';
+import ModalDeleteCancel from 'core/modal_delete_cancel';
+import {get_string as getString} from 'core/str';
 import ModalEvents from 'core/modal_events';
+import Notification from 'core/notification';
 import {prefetchStrings} from 'core/prefetch';
-// import Ajax from 'core/ajax';
+import {call as fetchMany} from 'core/ajax';
+import Templates from 'core/templates';
 
 const SELECTORS = {
     DELETEROW: "[data-action='delete']",
+    TABLEREGION: ".hero-unit",
 };
 
 
-const showdelete = async () => {
-    const modal = await Modal.create({
-        title: 'Test title',
-        body: 'Comoo',
-        footer: 'An example footer content',
-    }).then(modal => {
-        modal.show();
-        modal.registerCloseOnCancel();
-        return modal;
-    });
-    modal.getRoot().on(ModalEvents.hidden, () => this.destroy());
-};
+/**
+ * Creates an object representing a row deletion.
+ *
+ * @param {number} rowId - The ID of the row to delete.
+ * @param {number} courseId - The ID of the course.
+ * @param {number} userId - The ID of the user.
+ * @returns {object} - The delete row element object.
+ */
+const deleteRowCall = (rowId, courseId, userId) => ({
+    methodname: 'tool_davidcerezal_delete',
+    args: {
+        'rowid' : rowId,
+        'courseid' : courseId,
+        'userid' : userId,
+    },
+});
+
+/**
+ * Returns the course template object.
+ *
+ * @param {number} courseId - The ID of the course.
+ * @returns {object} The course template object.
+ */
+const getCourseTemplate = (courseId) => ({
+    methodname: 'tool_davidcerezal_get_template',
+    args: {
+        'courseid' : courseId
+    },
+});
 
 /**
  * Delete flow handler
+ * @param {Element} deleteRowElement
+ * @param {number} userId
  */
-/* const deleteRowHandler = async() => {
-    const modal = await await modalBodyRenderedPromise(ModalDeleteCancel, {
+const deleteRowHandler = async(deleteRowElement, userId) => {
+    const modal = await ModalDeleteCancel.create({
         title: getString('deleteentry', 'tool_davidcerezal'),
         body: getString('deletetitle', 'tool_davidcerezal'),
+    })
+    .then(modal => {
+        modal.show();
+        return modal;
     });
-    modal.getRoot().on(ModalEvents.delete, (e) => {
-        e.preventDefault();
-        modal.destroy();
-        Ajax.call([{
-            methodname: 'tool_davidcerezal_delete',
-            args: {
-                'id': element.dataset.id,
-                'sesskey': M.cfg.sesskey,
-            },
-            done: function (response) {
-                if (response.result) {
-                    window.console.log(getString('deleteconfirm', 'tool_davidcerezal'));
-                } else {
-                    window.console.log(getString('deleteerror', 'tool_davidcerezal'));
-                }
-            },
-            fail: function () {
-                window.console.error(getString('deleteerror', 'tool_davidcerezal'));
-            }
-        }]).always(() => {
-            modal.hide();
-        });
-    });
-}; */
 
-/**
- * Render a modal and return a body ready promise.
- *
- * @param {Modal} ModalClass the modal class
- * @param {object} modalParams the modal params
- * @return {Promise} the modal body ready promise
- */
-/* const modalBodyRenderedPromise = function(ModalClass, modalParams) {
-    return new Promise((resolve, reject) => {
-        ModalClass.create(modalParams).then((modal) => {
-            modal.setRemoveOnClose(true);
-            // Handle body loading event.
-            modal.getRoot().on(ModalEvents.bodyRendered, () => {
-                resolve(modal);
+    modal.getRoot().on(ModalEvents.delete, () => {
+        const rowId = deleteRowElement.getAttribute('data-id');
+        const courseId = deleteRowElement.getAttribute('data-courseid');
+        const checkheader = document.querySelector(SELECTORS.TABLEREGION);
+        const responses = fetchMany([
+            deleteRowCall(rowId, courseId, userId),
+            getCourseTemplate(courseId),
+        ]);
+        responses[0]
+        .fail(() => {
+            Notification.addNotification({
+                message: 'Error deleting row',
+                type: 'error'
             });
-            // Configure some extra modal params.
-            if (modalParams.saveButtonText !== undefined) {
-                modal.setSaveButtonText(modalParams.saveButtonText);
-            }
-            if (modalParams.deleteButtonText !== undefined) {
-                modal.setDeleteButtonText(modalParams.saveButtonText);
-            }
-            modal.show();
             return;
-        }).catch(() => {
-            reject(`Cannot load modal content`);
         });
+
+        responses[1]
+        .done((data) => {
+            Templates.render('tool_davidcerezal/index_page', data.content).then((html, js) => {
+                Templates.replaceNodeContents(checkheader, html, js);
+                Templates.runTemplateJS(js);
+            });
+            Notification.addNotification({
+                message: "Row deleted successfully",
+                type: 'success'
+            });
+            return;
+        })
+        .fail(() => {
+            Notification.addNotification({
+                message: 'Error updating row html',
+                type: 'error'
+            });
+            return;
+        });
+        modal.hide();
     });
+
 };
- */
-const init = () => {
+
+
+const init = (userId) => {
     prefetchStrings('tool_davidcerezal', [
         'deleteconfirm',
         'deleteerror',
@@ -121,7 +134,7 @@ const init = () => {
         const deleteRowElement = event.target.closest(SELECTORS.DELETEROW);
         if (deleteRowElement) {
             event.preventDefault();
-            await showdelete();
+            await deleteRowHandler(deleteRowElement, userId);
         }
     });
 };

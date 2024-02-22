@@ -68,6 +68,7 @@ class local_tool_davidcerezal_table_sql extends table_sql {
         ];
 
         $this->set_attribute('id', 'tool_davidcerezal_table');
+        $this->set_attribute('class', 'tool_davidcerezal_table');
         $this->define_columns(array_keys($columnheaders));
         $this->define_headers(array_values($columnheaders));
         $this->define_table_configs();
@@ -166,8 +167,19 @@ class local_tool_davidcerezal_table_sql extends table_sql {
      * @return string the formatted value
      */
     public function col_deletelinks(stdClass $row) {
-        $editlink = new moodle_url('/admin/tool/davidcerezal/delete.php', ['rowid' => $row->id, 'sesskey' => sesskey(), 'course_id' => $this->courseid,]);
-        return html_writer::link($editlink, get_string('deleteentry', 'tool_davidcerezal'), ['data-action' => 'delete']);
+        $editlink = new moodle_url('/admin/tool/davidcerezal/delete.php', 
+        [
+            'rowid' => $row->id, 
+            'sesskey' => sesskey(),
+             'course_id' => $this->courseid,
+        ]);
+
+        return html_writer::link($editlink, get_string('deleteentry', 'tool_davidcerezal'), 
+        [
+            'data-action' => 'delete',
+            'data-id' => $row->id, 
+            'data-courseid' => $this->courseid,
+        ]);
     }
 
     /**

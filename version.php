@@ -27,7 +27,7 @@ defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'tool_davidcerezal';
 $plugin->release   = '4.2.3';
-$plugin->version   = 2024021300;
+$plugin->version   = 2024022000;
 $plugin->requires  = 2020061500.00;
 $plugin->maturity  = MATURITY_BETA;
 $plugin->supported = [39, 403];

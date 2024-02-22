@@ -24,15 +24,21 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$functions = [
+use tool_davidcerezal\external\delete_row;
+use tool_davidcerezal\external\get_template;
 
+$functions = [
     'tool_davidcerezal_delete' => [
-        'classname'     => 'tool_davidcerezal\external',
-        'methodname'    => 'delete_row',
-        'classpath'     => '',
+        'classname'     =>  delete_row::class,
         'description'   => 'Delete a row from the table',
         'type'          => 'write',
-        'capabilities'  => '',
+        'ajax'          => true,
+        'loginrequired' => true,
+    ],
+    'tool_davidcerezal_get_template' => [
+        'classname'     =>  get_template::class,
+        'description'   => 'Get template of david cerezal tool acording a course',
+        'type'          => 'read',
         'ajax'          => true,
         'loginrequired' => true,
     ],

@@ -62,6 +62,8 @@ class index_page implements renderable, templatable {
      * @return stdClass An object containing the data to be used in the template.
      */
     public function export_for_template(renderer_base $output): stdClass {
+        global $USER;
+        
         $data = new stdClass();
         $data->tableheader = $this->tableheader;
         $pagedefaultperpage = $this->outpatabletable->get_default_per_page();
@@ -70,6 +72,7 @@ class index_page implements renderable, templatable {
         $this->outpatabletable->out($pagedefaultperpage, true); // Output captured here.
         $htmloutput = ob_get_clean();
         $data->outpatabletable = $htmloutput;
+        $data->userid = $USER->id;
 
         return $data;
     }

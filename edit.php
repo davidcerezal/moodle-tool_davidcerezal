@@ -105,7 +105,7 @@ if ($data = $form->get_data()) {
         // Update the existing record.
         $record->id = $rowid;
         $record->description = $data->description;
-        $rowid = \tool_davidcerezal\dblib::insert($record);
+        $rowid = \tool_davidcerezal\dblib::update($record);
     }
 
     // Redirect after successful operation.
