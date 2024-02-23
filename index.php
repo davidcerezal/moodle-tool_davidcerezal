@@ -31,18 +31,18 @@ use tool_davidcerezal\output\index_page;
 require_once(__DIR__ . '/../../../config.php');
 require_once($CFG->libdir.'/adminlib.php');
 
+global $DB;
+
 // Ensure the user is logged in as an admin.
 require_login();
 require_capability('moodle/site:config', context_system::instance());
-
-global $DB;
 
 $courseid = required_param('course_id', PARAM_INT);
 $coursecontext = context_course::instance($courseid);
 $pageurl = new moodle_url('/admin/tool/davidcerezal/index.php', ['course_id' => $courseid]);
 
 // Define the page layout.
-$PAGE->set_context(context_system::instance());
+$PAGE->set_context($coursecontext);
 $PAGE->set_pagelayout('admin');
 $PAGE->set_url($pageurl);
 $PAGE->set_title(get_string('pluginname', 'tool_davidcerezal'));
@@ -51,9 +51,15 @@ $PAGE->set_heading(get_string('pluginname', 'tool_davidcerezal'));
 // Print row tables.
 $output = $PAGE->get_renderer('tool_davidcerezal');
 
+// Get cached cm info.
+$coursecmd = get_fast_modinfo($courseid);
+$course = $coursecmd->get_course();
+$coursemodulesname = array_values($coursecmd->get_used_module_names());
+sort($coursemodulesname);
+
 echo $output->header();
 $outputtable = new local_tool_davidcerezal_table_sql($courseid, $pageurl);
-$renderable = new index_page('David Admin plugin\'s ', $outputtable);
+$renderable = new index_page('David Admin plugin\'s ', $outputtable, $course, $coursemodulesname);
 echo $output->render($renderable);
 
 // Show initial edit icon.

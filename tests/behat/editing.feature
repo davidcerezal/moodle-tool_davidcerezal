@@ -15,7 +15,7 @@ Feature: Creating, editing and deleting entries
   Scenario: create an entry
     When I am on the "C1" "Course" page logged in as "admin"
     And I navigate to "David Cerezal Demo" in current page administration
-    And I click on "Editar row" "link"
+    And I click on "Editar" "link"
     And I set the following fields to these values:
       | Name      | test entry 1 |
       | Completed | 0            |
@@ -29,12 +29,12 @@ Feature: Creating, editing and deleting entries
   Scenario: edit an entry
     When I am on the "C1" "Course" page logged in as "admin"
     And I navigate to "David Cerezal Demo" in current page administration
-    And I click on "Editar row" "link"
+    And I click on "Editar" "link"
     And I set the following fields to these values:
       | Name      | test entry 1 |
       | Completed | 0            |
     And I press "Save changes"
-    And I click on "Editar row" "link" in the "test entry 1" "table_row"
+    And I click on "Editar" "link" in the "test entry 1" "table_row"
     And I set the following fields to these values:
       | Completed | 1            |
     And I press "Save changes"
@@ -43,4 +43,20 @@ Feature: Creating, editing and deleting entries
       | Name         | Completed |
       | test entry 1 | Yes       |
     And I log out
+
+  Scenario: delete an entry
+    When I am on the "C1" "Course" page logged in as "admin"
+    And I navigate to "David Cerezal Demo" in current page administration
+    And I click on "Editar" "link"
+    And I set the following fields to these values:
+      | Name      | test entry 1 |
+      | Completed | 0            |
+    And I press "Save changes"
+    And I click on "Eliminar" "link" in the "test entry 1" "table_row"
+    And I click on "Delete" "link" in the "test entry 1" "table_row"   |
+    And I press "X"
+    Then I should see "There are no shared resources to display at this time."
+    And the following should exist in the "tool_davidcerezal_table" table:
+      | Name         | Completed |
+    And I log out 
     

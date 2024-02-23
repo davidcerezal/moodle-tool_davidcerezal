@@ -23,10 +23,10 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-$string['pluginname'] = 'David Cerezal Demo';
-$string['pagemaintitle'] = 'Main title';
+$string['pluginname'] = 'Awesome plugin';
+$string['pagemaintitle'] = 'Dave\'s awesome home';
 $string['helloworld'] = 'Hello world {$a}';
-$string['courseid'] = 'courseid of numb';
+$string['courseid'] = 'course';
 $string['name'] = 'Name';
 $string['completed'] = 'Completed';
 $string['priority'] = 'Priority';
@@ -39,4 +39,4 @@ $string['delete'] = 'Edit entry {$a}';
 $string['deletetitle'] = 'Do you want to delete this entry?';
 $string['deleteerror'] = 'Error deleting entry';
 $string['deleteconfirm'] = 'Entry deleted successfully';
-$string['eventname'] = 'evento dave';
+$string['eventname'] = 'Evento del Awesome plugin';

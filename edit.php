@@ -45,7 +45,7 @@ if (isset($rowid)) {
 }
 
 $pageurl = new moodle_url('/admin/tool/davidcerezal/edit.php', $urlparams);
-$PAGE->set_context(context_system::instance());
+$PAGE->set_context($context);
 $PAGE->set_pagelayout('admin');
 $PAGE->set_url($pageurl);
 

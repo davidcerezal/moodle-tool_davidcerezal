@@ -37,6 +37,19 @@
     }
 }}
 <div class="hero-unit">
+  {{#coursename}}
+  <h1>Course Name: {{coursename}}</h1>
+  {{/coursename}}
+
+  {{#coursemodules}}
+  Course Modules:
+  <ul>
+      {{#coursemodules}}
+      <li>{{.}}</li>
+      {{/coursemodules}}
+  </ul>
+  {{/coursemodules}}
+
   <h3>{{tableheader}} table</h3>
   {{{outpatabletable}}}
 </div>
