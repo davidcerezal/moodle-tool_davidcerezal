@@ -81,7 +81,7 @@ class delete_row extends external_api {
         // Validate capabilities of the user.
         $coursecontext = context_course::instance($courseid);
         self::validate_context($coursecontext);
-        require_capability('tool/davidcerezal:edit', $coursecontext);
+        require_capability('moodle/course:update', $coursecontext);
 
         // Check permissions.
         $user = core_user::get_user($userid, '*', MUST_EXIST);

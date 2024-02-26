@@ -75,7 +75,7 @@ class get_template extends external_api {
         // Validate capabilities of the user.
         $coursecontext = context_course::instance($courseid);
         self::validate_context($coursecontext);
-        require_capability('tool/davidcerezal:edit', $coursecontext);
+        require_capability('moodle/course:update', $coursecontext);
 
         // Check permissions.
         $course = $DB->get_record('course', ['id' => $courseid], '*', MUST_EXIST);

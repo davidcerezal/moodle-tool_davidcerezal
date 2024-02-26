@@ -13,7 +13,7 @@ Feature: Creating, editing and deleting entries
       | teacher1 | Theo | Teacher | teacher1@example.com |
     And the following "course enrolments" exist:
       | user | course | role |
-      | teacher1 | C1 | editingteacher |      
+      | teacher1 | C1 | editingteacher |
 
   Scenario: create an entry
     When I am on the "C1" "Course" page logged in as "teacher1"

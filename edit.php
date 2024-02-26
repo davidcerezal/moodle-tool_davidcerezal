@@ -27,9 +27,14 @@
 require_once(__DIR__ . '/../../../config.php');
 require_once($CFG->libdir.'/adminlib.php');
 
+// Retrieve parameters.
+$courseid = optional_param('course_id', null, PARAM_INT);
+$rowid = optional_param('row_id', null, PARAM_INT);
+$context = context_course::instance($courseid);
+
 // Ensure user is logged in and has necessary capability.
 require_login();
-require_capability('moodle/site:config', context_system::instance());
+require_capability('moodle/course:update', $context);
 
 // Initialize global $DB variable.
 global $DB;

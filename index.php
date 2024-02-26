@@ -35,10 +35,11 @@ global $DB;
 
 // Ensure the user is logged in as an admin.
 require_login();
-require_capability('moodle/site:config', context_system::instance());
-
 $courseid = required_param('course_id', PARAM_INT);
 $coursecontext = context_course::instance($courseid);
+
+require_capability('moodle/course:update', $coursecontext);
+
 $pageurl = new moodle_url('/admin/tool/davidcerezal/index.php', ['course_id' => $courseid]);
 
 // Define the page layout.
