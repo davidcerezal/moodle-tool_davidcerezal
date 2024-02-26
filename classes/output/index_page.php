@@ -59,9 +59,9 @@ class index_page implements renderable, templatable {
      * @param array     $coursemodules
      */
     public function __construct(
-        string $tableheader, 
+        string $tableheader,
         table_sql $outpatabletable,
-        stdClass $course = null, 
+        stdClass $course = null,
         array $coursemodules = null
     ) {
         $this->tableheader = $tableheader;
@@ -91,8 +91,7 @@ class index_page implements renderable, templatable {
         $data->coursename = null;
         if ($this->course) {
             $data->courseid = $this->course->shortname;
-        } 
-        $data->coursename = $this->course?->shortname;
+        }
         $data->coursemodules = $this->coursemodules;
 
         return $data;

@@ -99,11 +99,13 @@ const deleteRowHandler = async(deleteRowElement, userId) => {
 
         responses[1]
         .done((data) => {
-            Templates.render('tool_davidcerezal/index_page', data.content).then((html, js) => {
+            Templates.render('tool_davidcerezal/index_page', data.content)
+            .then((html, js) => {
                 Templates.replaceNodeContents(checkheader, html, js);
                 Templates.runTemplateJS(js);
                 return;
-            });
+            }).catch(Notification.exception);
+
             Notification.addNotification({
                 message: "Row deleted successfully",
                 type: 'success'

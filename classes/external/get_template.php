@@ -100,7 +100,7 @@ class get_template extends external_api {
                     'tableheader' => new external_value(PARAM_TEXT, 'The table header'),
                     'outpatabletable' => new external_value(PARAM_RAW, 'The table content'),
                     'userid' => new external_value(PARAM_INT, 'The user ID' ),
-                ],)
+                ]),
         ]);
     }
 }
