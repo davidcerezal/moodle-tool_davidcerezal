@@ -1,4 +1,3 @@
-
 <?php
 // This file is part of Moodle - http://moodle.org/
 //
@@ -26,20 +25,33 @@ defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->dirroot . '/backup/moodle2/backup_tool_plugin.class.php');
 
+/**
+ * Class backup_davidcerezal_plugin.
+ *
+ * The backup script to store plugins data.
+ *
+ * @package   tool_davidcerezal
+ * @copyright 2024, David Cerezal <david.cerezal@moodle.com>
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 class backup_davidcerezal_plugin extends backup_tool_plugin {
 
+    /**
+     * Summary of define_course_plugin_structure
+     * @return backup_plugin_element
+     */
     protected function define_course_plugin_structure() {
         global $DB;
 
         $plugin = $this->get_plugin_element();
 
         // Define the structure for tool_davidcerezal table.
-        $tool_davidcerezal = new backup_nested_element('tool_davidcerezal', ['id'], [
-            'courseid', 'data', 'name', 'completed', 'priority', 'timecreated', 
-            'timemodified', 'description', 'descriptionformat', 
+        $tooldavidcerezal = new backup_nested_element('tool_davidcerezal', ['id'], [
+            'courseid', 'data', 'name', 'completed', 'priority', 'timecreated',
+            'timemodified', 'description', 'descriptionformat',
         ]);
-        $tool_davidcerezal->set_source_table('tool_davidcerezal', ['courseid' => backup::VAR_COURSEID]);
-        $plugin->add_child($tool_davidcerezal);
+        $tooldavidcerezal->set_source_table('tool_davidcerezal', ['courseid' => backup::VAR_COURSEID]);
+        $plugin->add_child($tooldavidcerezal);
 
         return $plugin;
     }

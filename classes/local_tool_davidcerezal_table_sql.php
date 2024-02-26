@@ -167,17 +167,17 @@ class local_tool_davidcerezal_table_sql extends table_sql {
      * @return string the formatted value
      */
     public function col_deletelinks(stdClass $row) {
-        $editlink = new moodle_url('/admin/tool/davidcerezal/delete.php', 
+        $editlink = new moodle_url('/admin/tool/davidcerezal/delete.php',
         [
-            'rowid' => $row->id, 
+            'rowid' => $row->id,
             'sesskey' => sesskey(),
              'course_id' => $this->courseid,
         ]);
 
-        return html_writer::link($editlink, get_string('deleteentry', 'tool_davidcerezal'), 
+        return html_writer::link($editlink, get_string('deleteentry', 'tool_davidcerezal'),
         [
             'data-action' => 'delete',
-            'data-id' => $row->id, 
+            'data-id' => $row->id,
             'data-courseid' => $this->courseid,
         ]);
     }

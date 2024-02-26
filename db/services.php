@@ -18,7 +18,7 @@
  * Tool davidcerezal delete row
  *
  * @package    tool_davidcerezal
- * @copyright  2024 David Cerezal 
+ * @copyright  2024 David Cerezal
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -29,14 +29,14 @@ use tool_davidcerezal\external\get_template;
 
 $functions = [
     'tool_davidcerezal_delete' => [
-        'classname'     =>  delete_row::class,
+        'classname'     => delete_row::class,
         'description'   => 'Delete a row from the table',
         'type'          => 'write',
         'ajax'          => true,
         'loginrequired' => true,
     ],
     'tool_davidcerezal_get_template' => [
-        'classname'     =>  get_template::class,
+        'classname'     => get_template::class,
         'description'   => 'Get template of david cerezal tool acording a course',
         'type'          => 'read',
         'ajax'          => true,

@@ -25,14 +25,32 @@ defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->dirroot . '/backup/moodle2/restore_tool_foobar_task.class.php');
 
+/**
+ * Class restore_tool_foobar_plugin.
+ *
+ * The restore script to get back plugins data.
+ *
+ * @package   tool_davidcerezal
+ * @copyright 2024, David Cerezal <david.cerezal@moodle.com>
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 class restore_tool_foobar_plugin extends restore_tool_plugin {
-    
+
+    /**
+     * Summary of define_structure
+     * @return restore_path_element[]
+     */
     protected function define_structure() {
-        $paths = array();
+        $paths = [];
         $paths[] = new restore_path_element('tool_davidcerezal', '/course/tool_davidcerezal');
         return $paths;
     }
 
+    /**
+     * Summary of process_tool_davidcerezal
+     * @param mixed $data
+     * @return void
+     */
     protected function process_tool_davidcerezal($data) {
         global $DB;
 
@@ -45,6 +63,11 @@ class restore_tool_foobar_plugin extends restore_tool_plugin {
         $this->set_mapping('tool_davidcerezal', $oldid, $newitemid, true);
     }
 
+    /**
+     * Summary of get_courseid
+     * @throws \base_step_exception
+     * @return bool|int
+     */
     protected function get_courseid() {
         if (is_null($this->task)) {
             throw new base_step_exception('not_specified_base_task');

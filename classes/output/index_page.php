@@ -55,11 +55,15 @@ class index_page implements renderable, templatable {
      *
      * @param string    $tableheader
      * @param table_sql $outpatabletable
-     * @param table_sql $outpatabletable
      * @param stdClass  $course
      * @param array     $coursemodules
      */
-    public function __construct(string $tableheader, table_sql $outpatabletable, stdClass $course = null, array $coursemodules = null) {
+    public function __construct(
+        string $tableheader, 
+        table_sql $outpatabletable,
+        stdClass $course = null, 
+        array $coursemodules = null
+    ) {
         $this->tableheader = $tableheader;
         $this->outpatabletable = $outpatabletable;
         $this->course = $course;
@@ -74,7 +78,7 @@ class index_page implements renderable, templatable {
      */
     public function export_for_template(renderer_base $output): stdClass {
         global $USER;
-        
+
         $data = new stdClass();
         $data->tableheader = $this->tableheader;
         $pagedefaultperpage = $this->outpatabletable->get_default_per_page();
@@ -84,6 +88,10 @@ class index_page implements renderable, templatable {
         $htmloutput = ob_get_clean();
         $data->outpatabletable = $htmloutput;
         $data->userid = $USER->id;
+        $data->coursename = null;
+        if ($this->course) {
+            $data->courseid = $this->course->shortname;
+        } 
         $data->coursename = $this->course?->shortname;
         $data->coursemodules = $this->coursemodules;
 

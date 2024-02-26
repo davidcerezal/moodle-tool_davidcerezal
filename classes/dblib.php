@@ -68,7 +68,7 @@ class dblib {
 
         $data->timecreated = time();
         $result = $DB->insert_record('tool_davidcerezal', $data);
-        
+
         if ($result) {
             $context = context_course::instance($data->courseid);
             $event = entry_added::create(['context' => $context, 'objectid' => $data->courseid]);

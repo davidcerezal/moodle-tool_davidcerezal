@@ -61,7 +61,9 @@ class delete_row extends external_api {
     /**
      * External function to delete row form davidcerezal table.
      *
-     * @param int $id
+     * @param int $rowid
+     * @param int $courseid
+     * @param int $userid
      * @return array
      */
     public static function execute(int $rowid, int $courseid, int $userid): array {
@@ -100,7 +102,7 @@ class delete_row extends external_api {
      */
     public static function execute_returns(): external_single_structure {
         return new external_single_structure([
-                'result' => new external_value(PARAM_INT, 'id of course')
+            'result' => new external_value(PARAM_INT, 'id of course'),
         ]);
     }
 }

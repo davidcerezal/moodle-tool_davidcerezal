@@ -42,7 +42,7 @@ Feature: Creating, editing and deleting entries
     And the following should exist in the "tool_davidcerezal_table" table:
       | Name         | Completed |
       | test entry 1 | Yes       |
-    And I log out      
+    And I log out 
 
   Scenario: delete an entry
     When I am on the "C1" "Course" page logged in as "admin"
@@ -51,13 +51,13 @@ Feature: Creating, editing and deleting entries
     And I set the following fields to these values:
       | Name      | test entry 1 |
       | Completed | 0            |
-    And I press "Save changes"  
-    And I click on "Eliminar" "link" in the "test entry 1" "table_row"          
-    And I click on "Delete" "button" in the ".modal-dialog .modal-footer" "css_element" 
+    And I press "Save changes"
+    And I click on "Eliminar" "link" in the "test entry 1" "table_row"
+    And I click on "Delete" "button" in the ".modal-dialog .modal-footer" "css_element"
     Then I should see "There are no shared resources to display at this time."
     And the following should exist in the "tool_davidcerezal_table" table:
       | Name         | Completed |
-    And I log out 
+    And I log out
 
   Scenario: delete cancel not delete an entry
     When I am on the "C1" "Course" page logged in as "admin"
@@ -67,11 +67,10 @@ Feature: Creating, editing and deleting entries
       | Name      | test entry 1 |
       | Completed | 0            |
     And I press "Save changes"
-    And I click on "Eliminar" "link" in the "test entry 1" "table_row"      
-    And I click on "Cancel" "button" in the ".modal-dialog .modal-footer" "css_element" 
+    And I click on "Eliminar" "link" in the "test entry 1" "table_row"  
+    And I click on "Cancel" "button" in the ".modal-dialog .modal-footer" "css_element"
     Then I should see "David Admin plugin's  table"
     And the following should exist in the "tool_davidcerezal_table" table:
       | Name         | Completed |
       | test entry 1 | No       |
-    And I log out     
-    
+    And I log out

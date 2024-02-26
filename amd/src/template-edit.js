@@ -46,9 +46,9 @@ const SELECTORS = {
 const deleteRowCall = (rowId, courseId, userId) => ({
     methodname: 'tool_davidcerezal_delete',
     args: {
-        'rowid' : rowId,
-        'courseid' : courseId,
-        'userid' : userId,
+        'rowid': rowId,
+        'courseid': courseId,
+        'userid': userId,
     },
 });
 
@@ -61,7 +61,7 @@ const deleteRowCall = (rowId, courseId, userId) => ({
 const getCourseTemplate = (courseId) => ({
     methodname: 'tool_davidcerezal_get_template',
     args: {
-        'courseid' : courseId
+        'courseid': courseId
     },
 });
 
@@ -102,6 +102,7 @@ const deleteRowHandler = async(deleteRowElement, userId) => {
             Templates.render('tool_davidcerezal/index_page', data.content).then((html, js) => {
                 Templates.replaceNodeContents(checkheader, html, js);
                 Templates.runTemplateJS(js);
+                return;
             });
             Notification.addNotification({
                 message: "Row deleted successfully",
@@ -130,7 +131,7 @@ const init = (userId) => {
         'deleteentry',
     ]);
 
-    document.addEventListener('click', async (event) => {
+    document.addEventListener('click', async(event) => {
         const deleteRowElement = event.target.closest(SELECTORS.DELETEROW);
         if (deleteRowElement) {
             event.preventDefault();

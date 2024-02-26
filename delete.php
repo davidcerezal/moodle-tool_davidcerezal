@@ -35,6 +35,6 @@ require_capability('moodle/site:config', context_system::instance());
 $courseid = optional_param('course_id', 2, PARAM_INT);
 
 if ($deleteid = optional_param('rowid', null, PARAM_INT)) {
-    // $DB->delete_records('tool_davidcerezal', ['id' => $deleteid]);
+    $DB->delete_records('tool_davidcerezal', ['id' => $deleteid]);
     redirect(new moodle_url('/admin/tool/davidcerezal/index.php', ['course_id' => $courseid]));
 }
