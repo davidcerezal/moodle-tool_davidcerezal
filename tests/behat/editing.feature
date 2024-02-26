@@ -16,7 +16,7 @@ Feature: Creating, editing and deleting entries
       | teacher1 | C1 | editingteacher |      
 
   Scenario: create an entry
-    When I am on the "C1" "Course" page logged in as "admin"
+    When I am on the "C1" "Course" page logged in as "teacher1"
     And I navigate to "Awesome plugin" in current page administration
     And I click on "Editar" "link"
     And I set the following fields to these values:
@@ -30,7 +30,7 @@ Feature: Creating, editing and deleting entries
     And I log out
 
   Scenario: edit an entry
-    When I am on the "C1" "Course" page logged in as "admin"
+    When I am on the "C1" "Course" page logged in as "teacher1"
     And I navigate to "Awesome plugin" in current page administration
     And I click on "Editar" "link"
     And I set the following fields to these values:
@@ -48,7 +48,7 @@ Feature: Creating, editing and deleting entries
     And I log out
 
   Scenario: delete an entry
-    When I am on the "C1" "Course" page logged in as "admin"
+    When I am on the "C1" "Course" page logged in as "teacher1"
     And I navigate to "Awesome plugin" in current page administration
     And I click on "Editar" "link"
     And I set the following fields to these values:
@@ -63,7 +63,7 @@ Feature: Creating, editing and deleting entries
     And I log out
 
   Scenario: delete cancel not delete an entry
-    When I am on the "C1" "Course" page logged in as "admin"
+    When I am on the "C1" "Course" page logged in as "teacher1"
     And I navigate to "Awesome plugin" in current page administration
     And I click on "Editar" "link"
     And I set the following fields to these values:
