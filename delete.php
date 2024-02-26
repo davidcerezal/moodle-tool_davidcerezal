@@ -30,7 +30,9 @@ require_once($CFG->libdir.'/adminlib.php');
 
 require_login();
 require_sesskey();
-require_capability('moodle/site:config', context_system::instance());
+$courseid = optional_param('course_id', 2, PARAM_INT);
+$coursecontext = context_course::instance($courseid);
+require_capability('moodle/course:update', $coursecontext);
 
 $courseid = optional_param('course_id', 2, PARAM_INT);
 

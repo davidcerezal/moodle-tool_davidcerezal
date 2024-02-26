@@ -57,7 +57,7 @@ Feature: Creating, editing and deleting entries
     And I press "Save changes"
     And I click on "Eliminar" "link" in the "test entry 1" "table_row"
     And I click on "Delete" "button" in the ".modal-dialog .modal-footer" "css_element"
-    Then I should see "There are no shared resources to display at this time."
+    Then I should see "No hay elementos en la tabla"
     And the following should exist in the "tool_davidcerezal_table" table:
       | Name         | Completed |
     And I log out
