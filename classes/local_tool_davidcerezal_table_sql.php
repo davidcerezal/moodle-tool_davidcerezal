@@ -200,6 +200,6 @@ class local_tool_davidcerezal_table_sql extends table_sql {
      */
     public function print_nothing_to_display() {
         global $OUTPUT;
-        echo $OUTPUT->notification(get_string('moodlenet:nosharedresources'), 'info');
+        echo $OUTPUT->notification(get_string('nothing'), 'tool_davidcerezal');
     }
 }

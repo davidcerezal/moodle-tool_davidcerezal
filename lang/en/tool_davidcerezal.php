@@ -40,3 +40,4 @@ $string['deletetitle'] = 'Do you want to delete this entry?';
 $string['deleteerror'] = 'Error deleting entry';
 $string['deleteconfirm'] = 'Entry deleted successfully';
 $string['eventname'] = 'Evento del Awesome plugin';
+$string['nothing'] = 'No hay elementos en la tabla';
